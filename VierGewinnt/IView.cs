@@ -9,7 +9,7 @@ namespace VierGewinnt
     /// <summary>
     /// Represents a View used in the MainWindow
     /// </summary>
-    public class IView
+    public abstract class IView
     {
         #region Propertys
         /// <summary>
