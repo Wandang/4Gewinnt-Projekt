@@ -60,6 +60,6 @@ namespace VierGewinnt
         /// <summary>
         /// Close this View properly
         /// </summary>
-        public abstract void Close();
+        public abstract bool Close();
     }
 }

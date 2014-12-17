@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using VierGewinnt.Views;
+
 namespace VierGewinnt
 {
     /// <summary>
@@ -23,10 +25,21 @@ namespace VierGewinnt
         public MainWindow()
         {
             InitializeComponent();
+            this.Navigate(new MenuView(this));
+        }
+
+        /// <summary>
+        /// Navigate the MainWindow to a new View
+        /// </summary>
+        /// <param name="to">The View we Should navigate to</param>
+        public void Navigate(IView to)
+        {
+            this.MainFrame.Content = to;
         }
 
         /// <summary>
         /// Close a view
+        /// If the last view is closed we will close this Window
         /// </summary>
         /// <param name="view">View to close</param>
         public void CloseView(IView view)  
@@ -38,7 +51,18 @@ namespace VierGewinnt
             }
             else
             {
-                
+                if (view.ParentView != null)
+                {
+                    this.MainFrame.Content = view.ParentView;
+                    view.Close();
+                }
+                else
+                {
+                    if (view.Close())
+                    {
+                        this.Close();
+                    }
+                }
             }
         }
     }

@@ -42,7 +42,7 @@ namespace VierGewinnt.Views
         /// <summary>
         /// Close this View properly
         /// </summary>
-        public override void Close()
+        public override bool Close()
         {
             throw new NotImplementedException();
         }
