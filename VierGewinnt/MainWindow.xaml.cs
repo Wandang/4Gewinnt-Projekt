@@ -24,5 +24,22 @@ namespace VierGewinnt
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Close a view
+        /// </summary>
+        /// <param name="view">View to close</param>
+        public void CloseView(IView view)  
+        {
+            if (view.IsOverlay)
+            {
+                view.Close();
+                this.OverlayFrame.Content = null;
+            }
+            else
+            {
+                
+            }
+        }
     }
 }
