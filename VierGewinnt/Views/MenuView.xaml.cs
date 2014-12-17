@@ -18,11 +18,33 @@ namespace VierGewinnt.Views
     /// <summary>
     /// Interaktionslogik für MenuView.xaml
     /// </summary>
-    public partial class MenuView : Page
+    public partial class MenuView : IView
     {
-        public MenuView()
+        /// <summary>
+        /// Create new Menu View
+        /// </summary>
+        /// <param name="mw">Window to attach to</param>
+        /// <param name="overlay">Is this a Overlay or not</param>
+        /// <param name="p">Parent View of this View</param>
+        public MenuView(MainWindow mw, bool overlay, IView p) :
+            base(mw, overlay, p)
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Create new Menu View
+        /// </summary>
+        /// <param name="mw">Window to attach to</param>
+        public MenuView(MainWindow mw) :
+            this(mw, false, null) { }
+
+        /// <summary>
+        /// Close this View properly
+        /// </summary>
+        public override void Close()
+        {
+            throw new NotImplementedException();
         }
     }
 }

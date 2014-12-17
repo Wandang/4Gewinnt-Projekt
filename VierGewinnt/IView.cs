@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace VierGewinnt
 {
     /// <summary>
     /// Represents a View used in the MainWindow
     /// </summary>
-    public abstract class IView
+    public abstract class IView : Page
     {
         #region Propertys
         /// <summary>
