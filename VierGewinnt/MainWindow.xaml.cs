@@ -38,6 +38,16 @@ namespace VierGewinnt
         }
 
         /// <summary>
+        /// Uses the Overlay frame to overlay the current MainView
+        /// </summary>
+        /// <param name="ov">View to use in Overlay</param>
+        public void Overlay(IView ov)
+        {
+            this.BlendRect.Visibility = System.Windows.Visibility.Visible;
+            this.OverlayFrame.Content = ov;
+        }
+
+        /// <summary>
         /// Close a view
         /// If the last view is closed we will close this Window
         /// </summary>

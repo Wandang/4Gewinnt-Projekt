@@ -56,5 +56,25 @@ namespace VierGewinnt.Views
         {
             this.ViewHost.CloseView(this);
         }
+
+        /// <summary>
+        /// Handler for Buttons that open the Play Screen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnPlay_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        /// <summary>
+        /// Handler for Buttons that open the Options Menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnOptions_Click(object sender, RoutedEventArgs e)
+        {
+            this.ViewHost.Navigate(new OptionsView(this.ViewHost, false, this));
+        }
     }
 }

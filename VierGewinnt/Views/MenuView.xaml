@@ -35,8 +35,8 @@
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
             
-            <Button Grid.Row="1" Margin="0,5" Content="Spielen"/>
-            <Button Grid.Row="2" Margin="0,5" Content="Optionen" IsEnabled="False"/>
+            <Button Grid.Row="1" Margin="0,5" Content="Spielen" Click="BtnPlay_Click"/>
+            <Button Grid.Row="2" Margin="0,5" Content="Optionen" Click="BtnOptions_Click"/>
             <Button Grid.Row="3" Margin="0,5" Content="Beenden" Click="BtnClose_Click"/>
         </Grid>
 

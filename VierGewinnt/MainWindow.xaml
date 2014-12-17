@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="400" Width="735">
     <Grid>
-        <Frame Panel.ZIndex="0" Name="MainFrame" />
+        <Frame Panel.ZIndex="0" Name="MainFrame" NavigationUIVisibility="Hidden" />
         <Rectangle Panel.ZIndex="1" Name="BlendRect" Visibility="Hidden" Fill="#7F000000" />
-        <Frame Panel.ZIndex="2" Name="OverlayFrame" />
+        <Frame Panel.ZIndex="2" Name="OverlayFrame" NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>
