@@ -44,7 +44,17 @@ namespace VierGewinnt.Views
         /// </summary>
         public override bool Close()
         {
-            throw new NotImplementedException();
+            return (this.ParentView == null);
+        }
+
+        /// <summary>
+        /// Handler for every button that whants to close this Application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.ViewHost.CloseView(this);
         }
     }
 }

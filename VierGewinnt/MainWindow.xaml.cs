@@ -42,28 +42,38 @@ namespace VierGewinnt
         /// If the last view is closed we will close this Window
         /// </summary>
         /// <param name="view">View to close</param>
-        public void CloseView(IView view)  
+        public void CloseView(IView view)
         {
-            if (view.IsOverlay)
+            if (view.ParentView != null)
             {
-                view.Close();
-                this.OverlayFrame.Content = null;
-            }
-            else
-            {
-                if (view.ParentView != null)
+                if (view.IsOverlay)
                 {
-                    this.MainFrame.Content = view.ParentView;
-                    view.Close();
+                    this.OverlayFrame.Content = view.ParentView;
                 }
                 else
                 {
-                    if (view.Close())
+                    this.MainFrame.Content = view.ParentView;
+                }
+
+                view.Close();
+            }
+            else
+            {
+                if (view.IsOverlay || view.Close())
+                {
+                    if (view.IsOverlay)
+                    {
+                        this.OverlayFrame.Content = null;
+                        this.BlendRect.Visibility = System.Windows.Visibility.Hidden;
+                        view.Close();
+                    }
+                    else
                     {
                         this.Close();
                     }
                 }
             }
         }
+
     }
 }
