@@ -56,6 +56,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\GameStyleView.xaml.cs">
+      <DependentUpon>GameStyleView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
@@ -75,6 +78,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="Resources\Icons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <Page Include="Resources\WindowsIcons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GameStyleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -107,11 +122,28 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\VierGewinnt.KI\VierGewinnt.KI.csproj">
+      <Project>{472aa20a-88ee-4f09-ab5f-29241a67008d}</Project>
+      <Name>VierGewinnt.KI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VierGewinnt.Model\VierGewinnt.Model.csproj">
+      <Project>{a0b789ef-cc60-4c0e-b748-d413c05e3679}</Project>
+      <Name>VierGewinnt.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VierGewinnt.Network\VierGewinnt.Network.csproj">
+      <Project>{6c08efdb-4d2f-4fe6-bd84-190cdc64f911}</Project>
+      <Name>VierGewinnt.Network</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons-License.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

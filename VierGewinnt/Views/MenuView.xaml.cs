@@ -64,7 +64,7 @@ namespace VierGewinnt.Views
         /// <param name="e"></param>
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
-            
+            this.ViewHost.Navigate(new GameStyleView(this.ViewHost, false, this));
         }
 
         /// <summary>
