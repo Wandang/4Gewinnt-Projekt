@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using VierGewinnt.Model;
+
 namespace VierGewinnt.Views
 {
     /// <summary>
@@ -20,10 +22,12 @@ namespace VierGewinnt.Views
     /// </summary>
     public partial class GameView : IView
     {
-        public GameView(MainWindow mw, IView p) :
+        public GameView(MainWindow mw, IView p, IPlayer p1, IPlayer p2) :
             base(mw, false, p)
         {
             InitializeComponent();
+            
+
         }
 
         public override bool Close()
