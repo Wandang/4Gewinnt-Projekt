@@ -26,14 +26,33 @@ namespace VierGewinnt.Views
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Close the View
+        /// </summary>
+        /// <returns></returns>
         public override bool Close()
         {
             return true;
         }
 
+        /// <summary>
+        /// Go back to last View
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
             this.ViewHost.CloseView(this);
+        }
+
+        /// <summary>
+        /// Start Game against the KI (xD)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnSingle_Click(object sender, RoutedEventArgs e)
+        {
+            this.ViewHost.Navigate(new GameView(this.ViewHost, this.ParentView));
         }
     }
 }

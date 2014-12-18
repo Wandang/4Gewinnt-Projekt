@@ -65,7 +65,7 @@
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
 
-            <Button Grid.Row="1" Margin="0,5" Content="Einzelspieler"/>
+            <Button Grid.Row="1" Margin="0,5" Content="Einzelspieler" Click="BtnSingle_Click"/>
             <Button Grid.Row="2" Margin="0,5" Content="Mehrspieler (Lokal)"/>
             <Button Grid.Row="3" Margin="0,5" Content="Mehrspieler (LAN)"/>
         </Grid>
