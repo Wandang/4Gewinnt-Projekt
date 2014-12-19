@@ -52,7 +52,7 @@ namespace VierGewinnt.Views
         /// <param name="e"></param>
         private void BtnSingle_Click(object sender, RoutedEventArgs e)
         {
-            this.ViewHost.Navigate(new GameView(this.ViewHost, this.ParentView));
+            this.ViewHost.Navigate(new GameView(this.ViewHost, this.ParentView, null, null));
         }
     }
 }

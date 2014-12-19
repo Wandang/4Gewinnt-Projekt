@@ -11,6 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VierGewinnt.KI", "VierGewin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VierGewinnt.Model", "VierGewinnt.Model\VierGewinnt.Model.csproj", "{A0B789EF-CC60-4C0E-B748-D413C05E3679}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VierGewinnt.Logic", "VierGewinnt.Logic\VierGewinnt.Logic.csproj", "{D913A06E-F732-4350-A9F4-08287626580D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KIs", "KIs", "{7110A5ED-C1C2-4E1F-947E-E58DAA9AAB7D}"
+	ProjectSection(SolutionItems) = preProject
+		README.txt = README.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +40,10 @@ Global
 		{A0B789EF-CC60-4C0E-B748-D413C05E3679}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0B789EF-CC60-4C0E-B748-D413C05E3679}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0B789EF-CC60-4C0E-B748-D413C05E3679}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D913A06E-F732-4350-A9F4-08287626580D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D913A06E-F732-4350-A9F4-08287626580D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D913A06E-F732-4350-A9F4-08287626580D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D913A06E-F732-4350-A9F4-08287626580D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

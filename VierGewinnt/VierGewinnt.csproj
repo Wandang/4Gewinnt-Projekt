@@ -143,6 +143,10 @@
       <Project>{472aa20a-88ee-4f09-ab5f-29241a67008d}</Project>
       <Name>VierGewinnt.KI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VierGewinnt.Logic\VierGewinnt.Logic.csproj">
+      <Project>{d913a06e-f732-4350-a9f4-08287626580d}</Project>
+      <Name>VierGewinnt.Logic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VierGewinnt.Model\VierGewinnt.Model.csproj">
       <Project>{a0b789ef-cc60-4c0e-b748-d413c05e3679}</Project>
       <Name>VierGewinnt.Model</Name>

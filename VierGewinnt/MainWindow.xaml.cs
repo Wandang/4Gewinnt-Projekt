@@ -56,16 +56,17 @@ namespace VierGewinnt
         {
             if (view.ParentView != null)
             {
-                if (view.IsOverlay)
+                if (view.Close())
                 {
-                    this.OverlayFrame.Content = view.ParentView;
+                    if (view.IsOverlay)
+                    {
+                        this.OverlayFrame.Content = view.ParentView;
+                    }
+                    else
+                    {
+                        this.MainFrame.Content = view.ParentView;
+                    }
                 }
-                else
-                {
-                    this.MainFrame.Content = view.ParentView;
-                }
-
-                view.Close();
             }
             else
             {
