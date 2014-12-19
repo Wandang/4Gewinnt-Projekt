@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using VierGewinnt.Model;
@@ -17,6 +18,16 @@ namespace VierGewinnt.Logic.Controller
         /// The Game Model used by this Game Controller
         /// </summary>
         Game _game;
+
+        /// <summary>
+        /// The Row that the "User" wants to Click
+        /// </summary>
+        int _pressedRow = -1;
+
+        /// <summary>
+        /// Lock for Rounds
+        /// </summary>
+        public readonly object _roundLock = new object();
 
         public bool IsRunning { get; set;}
 
@@ -35,6 +46,31 @@ namespace VierGewinnt.Logic.Controller
                 Player1 = p1,
                 Player2 = p2
             };
+        }
+
+        public void SetRow(int row)
+        {
+            lock (_roundLock)
+            {
+                _pressedRow = row;
+                Monitor.Pulse(_roundLock);
+            }
+        }
+
+        public async void DoNext()
+        {
+            lock (_roundLock)
+            {
+                while (_pressedRow == -1)
+                {
+                    Console.WriteLine("Going into Wait");
+
+                    Monitor.Wait(_roundLock);
+
+                    Console.WriteLine("Test this <3");
+                    _pressedRow = -1;
+                }
+            }
         }
 
         public void InitGame()

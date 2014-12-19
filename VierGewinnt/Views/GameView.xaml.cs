@@ -47,6 +47,7 @@ namespace VierGewinnt.Views
             gameLoop = new Task(GameLoop);
 
             _game = new GameController(p1, p2);
+            _game.IsRunning = true;
 
             StartGame();
         }
@@ -58,7 +59,20 @@ namespace VierGewinnt.Views
 
         public async void GameLoop()
         {
-            
+            while (_game.IsRunning)
+            {
+                _game.DoNext();
+            }
+
+            if (_game.Winner != null)
+            {
+                await DisplayWinner();
+            }
+        }
+
+        public async Task DisplayWinner()
+        {
+            System.Threading.Thread.Sleep(1000);
         }
 
         /// <summary>
@@ -75,6 +89,16 @@ namespace VierGewinnt.Views
             {
                 return true;
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            _game.SetRow(0);
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            _game.SetRow(0);
         }
     }
 }
