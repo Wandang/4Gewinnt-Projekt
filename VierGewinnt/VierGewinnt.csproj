@@ -155,6 +155,10 @@
       <Project>{6c08efdb-4d2f-4fe6-bd84-190cdc64f911}</Project>
       <Name>VierGewinnt.Network</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VierGewinnt.Utils\VierGewinnt.Utils.csproj">
+      <Project>{bf308898-f3b0-49d2-84fd-3296481a09c6}</Project>
+      <Name>VierGewinnt.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons-License.txt" />

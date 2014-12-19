@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 
 using VierGewinnt.Model;
 using VierGewinnt.Logic.Controller;
+using VierGewinnt.Utils.Logger;
 
 namespace VierGewinnt.Views
 {
@@ -48,6 +49,8 @@ namespace VierGewinnt.Views
 
             _game = new GameController(p1, p2);
             _game.IsRunning = true;
+
+            
 
             StartGame();
         }
