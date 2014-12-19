@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VierGewinnt.Utils.Logger
 {
-    class MessageLoggedEventArgs
+    public class MessageLoggedEventArgs
     {
         /// <summary>
         /// Type of the Logged Message

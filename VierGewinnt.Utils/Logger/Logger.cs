@@ -11,14 +11,12 @@ namespace VierGewinnt.Utils.Logger
     /// </summary>
     public static class Logger
     {
-        private static Logger _l;
-
         /// <summary>
         /// Delegate to Handle Message Logged Events
         /// </summary>
         /// <param name="sender">Sender of this Event</param>
         /// <param name="args">Event Arguments</param>
-        public static delegate void MessageLoggedEventHandler(object sender, MessageLoggedEventArgs args);
+        public delegate void MessageLoggedEventHandler(object sender, MessageLoggedEventArgs args);
 
         /// <summary>
         /// Event that is triggered when a Message is Logged
@@ -28,11 +26,11 @@ namespace VierGewinnt.Utils.Logger
         /// <summary>
         /// Log Level of the Logger
         /// </summary>
-        public static LogLevel LogLevel = LogLevel.NORMAL;
+        public static LogLevel Level = LogLevel.NORMAL;
 
         private static void Log(LogLevel Level, string Namespace, string Message)
         {
-
+            LogToConsole(Level, Namespace, Message);
 
             var handler = OnMessageLogged;
             if (handler != null)
@@ -41,6 +39,30 @@ namespace VierGewinnt.Utils.Logger
             }
         }
 
+        /// <summary>
+        /// Logs out to the Console
+        /// </summary>
+        /// <param name="Level">LogLevel of the Message</param>
+        /// <param name="Namespace">Namespace</param>
+        /// <param name="Messaage">Message to Log</param>
+        private static void LogToConsole(LogLevel Level, string Namespace, string Messaage)
+        {
+            ConsoleColor cc = Console.ForegroundColor;
+
+            switch (Level)
+            {
+                case LogLevel.ERROR:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    break;
+                case LogLevel.DEBUG:
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    break;
+            }
+
+            Console.WriteLine("[{0}] {1}", Namespace, Messaage);
+            
+            Console.ForegroundColor = cc;
+        }
         #region Error
         /// <summary>
         /// Log an Error for a Namespace
@@ -65,7 +87,7 @@ namespace VierGewinnt.Utils.Logger
         #region Chat
         public static void Chat(string Message)
         {
-            if ((int)Logger.LogLevel > 1)
+            if ((int)Logger.Level > 1)
             {
                 Log(LogLevel.CHAT, "", Message);
             }
@@ -80,7 +102,7 @@ namespace VierGewinnt.Utils.Logger
         /// <param name="Message">Message to Log</param>
         public static void Log(string Namespace, string Message)
         {
-            if ((int)Logger.LogLevel >= 2)
+            if ((int)Logger.Level >= 2)
             {
                 Log(LogLevel.NORMAL, Namespace, Message);
             }
@@ -99,7 +121,7 @@ namespace VierGewinnt.Utils.Logger
         #region Info
         public static void Info(string Namespace, string Message)
         {
-            if ((int)Logger.LogLevel >= 3)
+            if ((int)Logger.Level >= 3)
             {
 
             }
@@ -109,7 +131,7 @@ namespace VierGewinnt.Utils.Logger
         #region Debug
         public static void Debug(string Namespace, string Message)
         {
-            if ((int)Logger.LogLevel >= 4)
+            if ((int)Logger.Level >= 4)
             {
                 Log(LogLevel.DEBUG, Namespace, Message);
             }

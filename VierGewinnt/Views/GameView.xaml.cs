@@ -50,8 +50,6 @@ namespace VierGewinnt.Views
             _game = new GameController(p1, p2);
             _game.IsRunning = true;
 
-            
-
             StartGame();
         }
 

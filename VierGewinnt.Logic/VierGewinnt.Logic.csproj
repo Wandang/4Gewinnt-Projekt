@@ -47,6 +47,10 @@
       <Project>{a0b789ef-cc60-4c0e-b748-d413c05e3679}</Project>
       <Name>VierGewinnt.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VierGewinnt.Utils\VierGewinnt.Utils.csproj">
+      <Project>{bf308898-f3b0-49d2-84fd-3296481a09c6}</Project>
+      <Name>VierGewinnt.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

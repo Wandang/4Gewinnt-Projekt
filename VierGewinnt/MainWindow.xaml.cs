@@ -24,6 +24,8 @@ namespace VierGewinnt
     {
         public MainWindow()
         {
+            // Set Log Level
+            VierGewinnt.Utils.Logger.Logger.Level = Utils.Logger.LogLevel.DEBUG;
             InitializeComponent();
             this.Navigate(new MenuView(this));
         }

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using VierGewinnt.Model;
+using VierGewinnt.Utils.Logger;
 
 namespace VierGewinnt.Logic.Controller
 {
@@ -63,11 +64,9 @@ namespace VierGewinnt.Logic.Controller
             {
                 while (_pressedRow == -1)
                 {
-                    Console.WriteLine("Going into Wait");
-
+                    Logger.Debug("GameController", "Task is going into Wait");
                     Monitor.Wait(_roundLock);
 
-                    Console.WriteLine("Test this <3");
                     _pressedRow = -1;
                 }
             }
