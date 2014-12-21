@@ -12,6 +12,25 @@ namespace VierGewinnt.Utils.Logger
     public static class Logger
     {
         /// <summary>
+        /// Init our Logger
+        /// </summary>
+        public static void Init()
+        {
+            Arguments.ArgumentHandler.Register("-log", args =>
+            {
+                switch (args)
+                {
+                    case "debug":
+                        Logger.Level = LogLevel.DEBUG;
+                        break;
+                    default:
+                        Logger.Level = LogLevel.NORMAL;
+                        break;
+                }
+            });    
+        }
+
+        /// <summary>
         /// Delegate to Handle Message Logged Events
         /// </summary>
         /// <param name="sender">Sender of this Event</param>
@@ -63,6 +82,7 @@ namespace VierGewinnt.Utils.Logger
             
             Console.ForegroundColor = cc;
         }
+
         #region Error
         /// <summary>
         /// Log an Error for a Namespace
