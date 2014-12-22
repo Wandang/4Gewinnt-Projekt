@@ -11,12 +11,7 @@ namespace VierGewinnt.Model
         /// <summary>
         /// Player One
         /// </summary>
-        public IPlayer Player1 { get; set; }
-
-        /// <summary>
-        /// Player Two
-        /// </summary>
-        public IPlayer Player2 { get; set; }
+        public IPlayer[] Player { get; set; }
 
         /// <summary>
         /// Field of the Game

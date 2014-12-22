@@ -21,15 +21,25 @@ namespace VierGewinnt.Logic.Controller
         Game _game;
 
         /// <summary>
+        /// Current Round
+        /// </summary>
+        int _round = 0;
+
+        /// <summary>
         /// The Row that the "User" wants to Click
         /// </summary>
         int _pressedRow = -1;
 
         /// <summary>
-        /// Lock for Rounds
+        /// Can be set by the Player when User Input is needed for the next turn
         /// </summary>
-        public readonly object _roundLock = new object();
+        bool _needsInput = false;
 
+        public static readonly object _roundLock = new object();
+
+        /// <summary>
+        /// Representing the State of the game
+        /// </summary>
         public bool IsRunning { get; set;}
 
         /// <summary>
@@ -44,17 +54,27 @@ namespace VierGewinnt.Logic.Controller
         {
             _game = new Game()
             {
-                Player1 = p1,
-                Player2 = p2
+                Player = new IPlayer[] { p1, p2 }
             };
+        }
+
+        public void NeedInput(bool need)
+        {
+            _needsInput = need;
         }
 
         public void SetRow(int row)
         {
-            lock (_roundLock)
+            Logger.Debug("Trying: " + row);
+
+            if (_needsInput)
             {
-                _pressedRow = row;
-                Monitor.Pulse(_roundLock);
+                
+                lock (_roundLock)
+                {
+                    _pressedRow = row;
+                    Monitor.Pulse(_roundLock);
+                }
             }
         }
 
@@ -64,10 +84,10 @@ namespace VierGewinnt.Logic.Controller
             {
                 while (_pressedRow == -1)
                 {
-                    Logger.Debug("GameController", "Task is going into Wait");
-                    Monitor.Wait(_roundLock);
+                    Logger.Debug("GameController", "Getting next Players Round");
+                    _game.Player[_round % 2].GetNext(ref _needsInput);
 
-                    _pressedRow = -1;
+                    _needsInput = false; //Reset input so we don't forget this
                 }
             }
         }

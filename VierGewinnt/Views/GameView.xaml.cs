@@ -96,10 +96,5 @@ namespace VierGewinnt.Views
         {
             _game.SetRow(0);
         }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            _game.SetRow(0);
-        }
     }
 }

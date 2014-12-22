@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using VierGewinnt.Logic;
+
 namespace VierGewinnt.Views
 {
     /// <summary>
@@ -52,7 +54,7 @@ namespace VierGewinnt.Views
         /// <param name="e"></param>
         private void BtnSingle_Click(object sender, RoutedEventArgs e)
         {
-            this.ViewHost.Navigate(new GameView(this.ViewHost, this.ParentView, null, null));
+            this.ViewHost.Navigate(new GameView(this.ViewHost, this.ParentView, new HumanPlayer("EldoranDev"), new HumanPlayer("EldoranDev2")));
         }
     }
 }

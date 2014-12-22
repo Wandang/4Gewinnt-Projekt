@@ -17,7 +17,8 @@ namespace VierGewinnt.Model
         /// <summary>
         /// Get the Next Row of the Player
         /// </summary>
+        /// <param name="input">can be set if the Turn needs user input</param>
         /// <returns>Row</returns>
-        int GetNext();
+        int GetNext(ref bool input);
     }
 }
