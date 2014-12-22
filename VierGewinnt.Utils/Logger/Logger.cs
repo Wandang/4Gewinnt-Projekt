@@ -16,7 +16,7 @@ namespace VierGewinnt.Utils.Logger
         /// </summary>
         public static void Init()
         {
-            Arguments.ArgumentHandler.Register("-log", args =>
+            Arguments.ArgumentHandler.Register("log", args =>
             {
                 switch (args)
                 {
@@ -27,6 +27,8 @@ namespace VierGewinnt.Utils.Logger
                         Logger.Level = LogLevel.NORMAL;
                         break;
                 }
+
+                System.Diagnostics.Debug.WriteLine("Log Level Changed");
             });    
         }
 

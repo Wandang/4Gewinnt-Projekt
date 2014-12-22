@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+  <Compile Include="Utils.cs" />
+	<Compile Include="Arguments\Argumenthandler.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Logger\LogLevel.cs" />
     <Compile Include="Logger\MessageLoggedEventArgs.cs" />

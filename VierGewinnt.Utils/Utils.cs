@@ -16,6 +16,10 @@ namespace VierGewinnt.Utils
             Arguments.ArgumentHandler.Init(); //Init this first so we can register everything else here
 
             Logger.Logger.Init();
+
+
+            // First run our ArgumentHandler when our Utils are Initialized
+            Arguments.ArgumentHandler.Run();
         }
     }
 }

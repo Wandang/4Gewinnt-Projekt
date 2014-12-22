@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace VierGewinnt.Utils.Arguments
@@ -19,6 +20,9 @@ namespace VierGewinnt.Utils.Arguments
         /// </summary>
         private static readonly Dictionary<string, List<ArgumentCallback>> Arguments = new Dictionary<string, List<ArgumentCallback>>();
 
+        /// <summary>
+        /// Parameters of the Arguments
+        /// </summary>
         private static Dictionary<string, string> _args = new Dictionary<string, string>();
 
         /// <summary>
@@ -57,7 +61,21 @@ namespace VierGewinnt.Utils.Arguments
         /// <param name="args">Comandline Arguments</param>
         public static void Init()
         {
-            
+            string[] args = Environment.GetCommandLineArgs();
+
+            if (args.Length > 0)
+            {
+                for (int i = 0; i < args.Length; i++)
+                {
+                    if (args[i].StartsWith("-"))
+                    {
+                        Arguments.Add(args[i].Replace("-", ""), new List<ArgumentCallback>());
+                        _args.Add(args[i].Replace("-", ""), (args.Length > i + 1 && !args[i + 1].StartsWith("-")) ? args[i + 1] : "");
+
+                        i++;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -65,7 +83,15 @@ namespace VierGewinnt.Utils.Arguments
         /// </summary>
         public static void Run()
         {
-            
+            foreach (KeyValuePair<string, List<ArgumentCallback>> pair in Arguments)
+            {
+                Debug.WriteLine(pair.Value.Count);
+
+                foreach (ArgumentCallback del in pair.Value)
+                {
+                    del(_args[pair.Key]);
+                }
+            }
         }
     }
 }
