@@ -35,6 +35,9 @@ namespace VierGewinnt.Logic.Controller
         /// </summary>
         bool _needsInput = false;
 
+        /// <summary>
+        /// Lock Object (yes this is allowed)
+        /// </summary>
         public static readonly object _roundLock = new object();
 
         /// <summary>
@@ -94,7 +97,7 @@ namespace VierGewinnt.Logic.Controller
 
         public void InitGame()
         {
-            _game.CreateField(8, 7);
+            _game.CreateField(6, 7);
         }
     }
 }
