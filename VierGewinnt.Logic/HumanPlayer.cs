@@ -17,9 +17,9 @@ namespace VierGewinnt.Logic
         /// </summary>
         string _name;
 
-        public HumanPlayer(string Name)
+        public HumanPlayer(string name)
         {
-            _name = Name;
+            _name = name;
         }
 
         public string GetName()
@@ -38,9 +38,9 @@ namespace VierGewinnt.Logic
 
             Logger.Debug("Going into Wait");
 
-            lock (Controller.GameController._roundLock)
+            lock (Controller.GameController.RoundLock)
             {
-                Monitor.Wait(Controller.GameController._roundLock);
+                Monitor.Wait(Controller.GameController.RoundLock);
             }
             
             Logger.Debug("Trying the Row the user clicked");

@@ -8,8 +8,8 @@ namespace VierGewinnt.Model
 {
     public enum State
     {
-        EMPTY,
-        PLAYER1,
-        PLAYER2
+        Empty,
+        Player1,
+        Player2
     }
 }

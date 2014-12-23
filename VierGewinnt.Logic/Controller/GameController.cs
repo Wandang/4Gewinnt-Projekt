@@ -38,7 +38,7 @@ namespace VierGewinnt.Logic.Controller
         /// <summary>
         /// Lock Object (yes this is allowed)
         /// </summary>
-        public static readonly object _roundLock = new object();
+        public static readonly object RoundLock = new object();
 
         /// <summary>
         /// Representing the State of the game
@@ -57,8 +57,10 @@ namespace VierGewinnt.Logic.Controller
         {
             _game = new Game()
             {
-                Player = new IPlayer[] { p1, p2 }
+                Player = new[] { p1, p2 }
             };
+
+            _game.CreateField(6,7);
         }
 
         public void NeedInput(bool need)
@@ -73,31 +75,51 @@ namespace VierGewinnt.Logic.Controller
             if (_needsInput)
             {
                 
-                lock (_roundLock)
+                lock (RoundLock)
                 {
                     _pressedRow = row;
-                    Monitor.Pulse(_roundLock);
+                    Monitor.Pulse(RoundLock);
                 }
             }
         }
 
         public async void DoNext()
         {
-            lock (_roundLock)
+            _pressedRow = -1;
+
+            lock (RoundLock)
             {
                 while (_pressedRow == -1)
                 {
                     Logger.Debug("GameController", "Getting next Players Round");
-                    _game.Player[_round % 2].GetNext(ref _needsInput);
+                    _pressedRow = _game.Player[_round % 2].GetNext(ref _needsInput);
 
                     _needsInput = false; //Reset input so we don't forget this
+
+                    if (!IsValid(_pressedRow))
+                    {
+                        _pressedRow = -1;
+                    }
+                    else
+                    {
+                        _game.DoTurn(_pressedRow, _round % 2);
+                    }
                 }
+
+                Logger.Debug("Leaving Lock Loop");
             }
+
+            _round++;
         }
 
         public void InitGame()
         {
             _game.CreateField(6, 7);
+        }
+
+        private bool IsValid(int row)
+        {
+            return _game.Field.HasEmpty(row);
         }
     }
 }

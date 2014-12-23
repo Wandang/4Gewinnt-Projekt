@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,12 +20,36 @@ namespace VierGewinnt.Model
         {
             _field = new State[width,height];
 
-            for (int x = 0; x < _field.GetLength(0); x++ )
+            for (var x = 0; x < _field.GetLength(0); x++ )
             {
-                for (int y = 0; y < _field.GetLength(1); y++)
+                for (var y = 0; y < _field.GetLength(1); y++)
                 {
-                    _field[x,y] = State.EMPTY;
+                    _field[x,y] = State.Empty;
                 }
+            }
+        }
+
+        public bool HasEmpty(int row)
+        {
+            for (var y = 0; y < _field.GetLength(1); y++)
+            {
+                if (_field[row, y] == State.Empty)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void Set(int row, State player)
+        {
+            for (var y = 0; y < _field.GetLength(1); y++)
+            {
+                if (_field[row, y] != State.Empty) continue;
+                
+                _field[row, y] = player;
+                break;
             }
         }
     }

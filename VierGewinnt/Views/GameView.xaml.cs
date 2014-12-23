@@ -27,12 +27,12 @@ namespace VierGewinnt.Views
         /// <summary>
         /// The Task that handles the GameLoop
         /// </summary>
-        Task gameLoop;
+        private Task gameLoop;
 
         /// <summary>
         /// The Game Controller that runs the Game
         /// </summary>
-        GameController _game;
+        private GameController _game;
 
         /// <summary>
         /// Create a new Game View
@@ -84,7 +84,9 @@ namespace VierGewinnt.Views
         {
             if (_game.IsRunning)
             {
-                return (MessageBox.Show("Wirklich Beenden (Spiel gillt als Verloren) ?", "Beenden", MessageBoxButton.YesNo) == MessageBoxResult.Yes);
+                return
+                    (MessageBox.Show("Wirklich Beenden (Spiel gillt als Verloren) ?", "Beenden", MessageBoxButton.YesNo) ==
+                     MessageBoxResult.Yes);
             }
             else
             {
@@ -95,6 +97,40 @@ namespace VierGewinnt.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             _game.SetRow(0);
+        }
+
+        private void canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            for (int y = 0; y < 6; y++)
+            {
+                for (int x = 0; x < 7; x++)
+                {
+                    Button btn = new Button
+                    {
+                        Width = 50, 
+                        Height = 50, 
+                        CommandParameter = x
+                    };
+
+
+                    btn.Click += btn_Click;
+
+                    Canv.Children.Add(btn);
+
+                    Canvas.SetLeft(btn, x*50);
+                    Canvas.SetTop(btn, y*50);
+                }
+            }
+        }
+
+        private void btn_Click(object sender, RoutedEventArgs e)
+        {
+            _game.SetRow((int)(((Button)sender).CommandParameter));
         }
     }
 }

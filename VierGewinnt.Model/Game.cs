@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,6 +27,11 @@ namespace VierGewinnt.Model
         public void CreateField(int Height, int Width)
         {
             Field = new Field(Width, Height);
+        }
+
+        public void DoTurn(int row, int player)
+        {
+            Field.Set(row, (State)(player+1));
         }
     }
 }
