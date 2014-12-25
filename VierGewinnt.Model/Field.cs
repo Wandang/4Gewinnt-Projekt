@@ -9,7 +9,17 @@ namespace VierGewinnt.Model
 {
     public class Field
     {
-        public State[,] _field;
+        State[,] _field;
+
+        public int Height
+        {
+            get { return _field.GetLength(1); }
+        }
+
+        public int Width
+        {
+            get { return _field.GetLength(0); }
+        }
 
         /// <summary>
         /// Create a new Field
@@ -47,15 +57,16 @@ namespace VierGewinnt.Model
             return false;
         }
 
-        public void Set(int row, State player)
+        public int Set(int row, State player)
         {
             for (var y = _field.GetLength(1)-1; y > 0; y--)
             {
                 if (_field[row, y] != State.Empty) continue;
                 
                 _field[row, y] = player;
-                break;
+                return y;
             }
+            return -1;
         }
     }
 }

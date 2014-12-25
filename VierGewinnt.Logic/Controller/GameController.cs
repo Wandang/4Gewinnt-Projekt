@@ -106,7 +106,14 @@ namespace VierGewinnt.Logic.Controller
                     }
                     else
                     {
-                        _game.DoTurn(_pressedColumn, _round % 2);
+                        int y = _game.DoTurn(_pressedColumn, _round % 2);
+                        int x = _pressedColumn;
+
+                        if (GotWinner(x, y))
+                        {
+                            Winner = _game.Player[_round % 2];
+                            Logger.Log("WE GOT A WINNER!");
+                        }
                     }
                 }
 
@@ -114,6 +121,36 @@ namespace VierGewinnt.Logic.Controller
             }
 
             _round++;
+        }
+
+        /// <summary>
+        /// Checks if the last Turn made one player win
+        /// </summary>
+        /// <param name="x">X Coord of the last Turn</param>
+        /// <param name="y">Y Coord of the last Turn</param>
+        /// <returns></returns>
+        private bool GotWinner(int x, int y)
+        {
+            Logger.Log("X:" + x, " --- Y:" + y);
+
+            bool winner = false;
+            int tmpCount = 0;
+            State player = Field.Get(y,x);
+
+            for (int i = 0; i < Field.Height; i++)
+            {
+                if(Field.Get(i, x) == player) {
+                    tmpCount++;
+                    if(tmpCount == 4) {
+                        winner = true;
+                        break;
+                    }
+                } else {
+                    tmpCount = 0;
+                }
+            }
+
+            return winner;
         }
 
         public void InitGame()
