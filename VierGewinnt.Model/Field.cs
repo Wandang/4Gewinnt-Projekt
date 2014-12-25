@@ -29,11 +29,16 @@ namespace VierGewinnt.Model
             }
         }
 
-        public bool HasEmpty(int row)
+        public State Get(int y, int x)
+        {
+            return _field[x, y];
+        }
+
+        public bool HasEmpty(int col)
         {
             for (var y = 0; y < _field.GetLength(1); y++)
             {
-                if (_field[row, y] == State.Empty)
+                if (_field[col, y] == State.Empty)
                 {
                     return true;
                 }
@@ -44,7 +49,7 @@ namespace VierGewinnt.Model
 
         public void Set(int row, State player)
         {
-            for (var y = 0; y < _field.GetLength(1); y++)
+            for (var y = _field.GetLength(1)-1; y > 0; y--)
             {
                 if (_field[row, y] != State.Empty) continue;
                 

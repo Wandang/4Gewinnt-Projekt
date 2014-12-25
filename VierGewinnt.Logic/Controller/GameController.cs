@@ -28,12 +28,14 @@ namespace VierGewinnt.Logic.Controller
         /// <summary>
         /// The Row that the "User" wants to Click
         /// </summary>
-        int _pressedRow = -1;
+        int _pressedColumn = -1;
 
         /// <summary>
         /// Can be set by the Player when User Input is needed for the next turn
         /// </summary>
         bool _needsInput = false;
+
+        public Field Field { get { return _game.Field; } }
 
         /// <summary>
         /// Lock Object (yes this is allowed)
@@ -68,7 +70,7 @@ namespace VierGewinnt.Logic.Controller
             _needsInput = need;
         }
 
-        public void SetRow(int row)
+        public void SetColumn(int row)
         {
             Logger.Debug("Trying: " + row);
 
@@ -77,7 +79,7 @@ namespace VierGewinnt.Logic.Controller
                 
                 lock (RoundLock)
                 {
-                    _pressedRow = row;
+                    _pressedColumn = row;
                     Monitor.Pulse(RoundLock);
                 }
             }
@@ -85,24 +87,26 @@ namespace VierGewinnt.Logic.Controller
 
         public async void DoNext()
         {
-            _pressedRow = -1;
+            _pressedColumn = -1;
 
             lock (RoundLock)
             {
-                while (_pressedRow == -1)
+                while (_pressedColumn == -1)
                 {
                     Logger.Debug("GameController", "Getting next Players Round");
-                    _pressedRow = _game.Player[_round % 2].GetNext(ref _needsInput);
+                    _game.Player[_round % 2].GetNext(ref _needsInput, ref _pressedColumn);
+
+                    Logger.Log("Trying: " + _pressedColumn);
 
                     _needsInput = false; //Reset input so we don't forget this
 
-                    if (!IsValid(_pressedRow))
+                    if (!IsValid(_pressedColumn))
                     {
-                        _pressedRow = -1;
+                        _pressedColumn = -1;
                     }
                     else
                     {
-                        _game.DoTurn(_pressedRow, _round % 2);
+                        _game.DoTurn(_pressedColumn, _round % 2);
                     }
                 }
 
@@ -117,9 +121,9 @@ namespace VierGewinnt.Logic.Controller
             _game.CreateField(6, 7);
         }
 
-        private bool IsValid(int row)
+        private bool IsValid(int col)
         {
-            return _game.Field.HasEmpty(row);
+            return Field.HasEmpty(col);
         }
     }
 }

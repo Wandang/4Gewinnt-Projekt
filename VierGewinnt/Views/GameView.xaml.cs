@@ -24,6 +24,8 @@ namespace VierGewinnt.Views
     /// </summary>
     public partial class GameView : IView
     {
+        Button[,] _btns = new Button[6, 7];
+
         /// <summary>
         /// The Task that handles the GameLoop
         /// </summary>
@@ -63,6 +65,7 @@ namespace VierGewinnt.Views
             while (_game.IsRunning)
             {
                 _game.DoNext();
+                Update();
             }
 
             if (_game.Winner != null)
@@ -71,9 +74,39 @@ namespace VierGewinnt.Views
             }
         }
 
+        /// <summary>
+        /// Uptdate our GameView
+        /// </summary>
+        public void Update()
+        {
+            for (int y = 0; y < 6; y++)
+            {
+                for (int x = 0; x < 7; x++)
+                {
+                    switch (_game.Field.Get(y, x))
+                    {
+                        case State.Player1:
+                            SetBackground(_btns[y, x], Color.FromRgb(255, 0, 0));
+                            break;
+                        case State.Player2:
+                            SetBackground(_btns[y, x], Color.FromRgb(0, 0, 255));
+                            break;
+                    }
+                }
+            }
+        }
+
+        public void SetBackground(Button btn, Color clr)
+        {
+            btn.Dispatcher.Invoke(() =>
+            {
+                btn.Background = new SolidColorBrush(clr);
+            });
+        }
+
         public async Task DisplayWinner()
         {
-            System.Threading.Thread.Sleep(1000);
+            await Task.Delay(1000);
         }
 
         /// <summary>
@@ -96,12 +129,7 @@ namespace VierGewinnt.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _game.SetRow(0);
-        }
-
-        private void canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-
+            _game.SetColumn((int)((Button)sender).CommandParameter);
         }
 
         private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
@@ -110,7 +138,7 @@ namespace VierGewinnt.Views
             {
                 for (int x = 0; x < 7; x++)
                 {
-                    Button btn = new Button
+                    _btns[y,x] = new Button
                     {
                         Width = 50, 
                         Height = 50, 
@@ -118,19 +146,23 @@ namespace VierGewinnt.Views
                     };
 
 
-                    btn.Click += btn_Click;
+                    _btns[y, x].Click += btn_Click;
 
-                    Canv.Children.Add(btn);
 
-                    Canvas.SetLeft(btn, x*50);
-                    Canvas.SetTop(btn, y*50);
+
+                    Canv.Children.Add(_btns[y, x]);
+
+                    Canvas.SetLeft(_btns[y, x], x * 50);
+                    Canvas.SetTop(_btns[y, x], y * 50);
                 }
             }
         }
 
         private void btn_Click(object sender, RoutedEventArgs e)
         {
-            _game.SetRow((int)(((Button)sender).CommandParameter));
+            System.Diagnostics.Debug.WriteLine("Clicked Col: " + (int)((Button)sender).CommandParameter);
+
+            _game.SetColumn((int)(((Button)sender).CommandParameter));
         }
     }
 }

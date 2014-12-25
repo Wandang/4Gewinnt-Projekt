@@ -32,7 +32,7 @@ namespace VierGewinnt.Logic
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public int GetNext(ref bool input)
+        public void GetNext(ref bool input, ref int column)
         {
             input = true;
 
@@ -44,8 +44,6 @@ namespace VierGewinnt.Logic
             }
             
             Logger.Debug("Trying the Row the user clicked");
-
-            return 0;
         }
     }
 }

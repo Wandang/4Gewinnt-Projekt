@@ -19,6 +19,6 @@ namespace VierGewinnt.Model
         /// </summary>
         /// <param name="input">can be set if the Turn needs user input</param>
         /// <returns>Row</returns>
-        int GetNext(ref bool input);
+        void GetNext(ref bool input, ref int column);
     }
 }

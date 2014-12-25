@@ -29,9 +29,9 @@ namespace VierGewinnt.Model
             Field = new Field(Width, Height);
         }
 
-        public void DoTurn(int row, int player)
+        public void DoTurn(int col, int player)
         {
-            Field.Set(row, (State)(player+1));
+            Field.Set(col, (State)(player+1));
         }
     }
 }
