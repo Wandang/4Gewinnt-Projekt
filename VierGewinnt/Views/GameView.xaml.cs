@@ -24,12 +24,12 @@ namespace VierGewinnt.Views
     /// </summary>
     public partial class GameView : IView
     {
-        Button[,] _btns = new Button[6, 7];
+        readonly Button[,] _btns = new Button[7, 6];
 
         /// <summary>
         /// The Task that handles the GameLoop
         /// </summary>
-        private Task gameLoop;
+        private Task _gameLoop;
 
         /// <summary>
         /// The Game Controller that runs the Game
@@ -47,17 +47,16 @@ namespace VierGewinnt.Views
             base(mw, false, p)
         {
             InitializeComponent();
-            gameLoop = new Task(GameLoop);
+            _gameLoop = new Task(GameLoop);
 
-            _game = new GameController(p1, p2);
-            _game.IsRunning = true;
+            _game = new GameController(p1, p2) {IsRunning = true};
 
             StartGame();
         }
 
         public void StartGame()
         {
-            gameLoop.Start();
+            _gameLoop.Start();
         }
 
         public async void GameLoop()
@@ -79,17 +78,17 @@ namespace VierGewinnt.Views
         /// </summary>
         public void Update()
         {
-            for (int y = 0; y < 6; y++)
+            for (var x = 0; x < 7; x++)
             {
-                for (int x = 0; x < 7; x++)
+                for (var y = 0; y < 6; y++)
                 {
-                    switch (_game.Field.Get(y, x))
+                    switch (_game.Field.Get(x, y))
                     {
                         case State.Player1:
-                            SetBackground(_btns[y, x], Color.FromRgb(255, 0, 0));
+                            SetBackground(_btns[x, y], Color.FromRgb(255, 0, 0));
                             break;
                         case State.Player2:
-                            SetBackground(_btns[y, x], Color.FromRgb(0, 0, 255));
+                            SetBackground(_btns[x, y], Color.FromRgb(0, 0, 255));
                             break;
                     }
                 }
@@ -134,11 +133,11 @@ namespace VierGewinnt.Views
 
         private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
         {
-            for (int y = 0; y < 6; y++)
+            for (var x = 0; x < 7; x++)
             {
-                for (int x = 0; x < 7; x++)
+                for (var y = 0; y < 6; y++)
                 {
-                    _btns[y,x] = new Button
+                    _btns[x,y] = new Button
                     {
                         Width = 50, 
                         Height = 50, 
@@ -146,14 +145,14 @@ namespace VierGewinnt.Views
                     };
 
 
-                    _btns[y, x].Click += btn_Click;
+                    _btns[x, y].Click += btn_Click;
 
 
 
-                    Canv.Children.Add(_btns[y, x]);
+                    Canv.Children.Add(_btns[x, y]);
 
-                    Canvas.SetLeft(_btns[y, x], x * 50);
-                    Canvas.SetTop(_btns[y, x], y * 50);
+                    Canvas.SetLeft(_btns[x, y], x * 50);
+                    Canvas.SetTop(_btns[x, y], y * 50);
                 }
             }
         }

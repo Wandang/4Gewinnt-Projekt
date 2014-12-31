@@ -22,11 +22,11 @@ namespace VierGewinnt.Model
         /// <summary>
         /// Create new Field for this Game
         /// </summary>
-        /// <param name="Height">Height of the Game Field</param>
-        /// <param name="Width">Width of the Game Field</param>
-        public void CreateField(int Height, int Width)
+        /// <param name="height">Height of the Game Field</param>
+        /// <param name="width">Width of the Game Field</param>
+        public void CreateField(int height, int width)
         {
-            Field = new Field(Width, Height);
+            Field = new Field(width, height);
         }
 
         public int DoTurn(int col, int player)

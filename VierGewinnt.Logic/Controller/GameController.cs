@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -100,20 +101,20 @@ namespace VierGewinnt.Logic.Controller
 
                     _needsInput = false; //Reset input so we don't forget this
 
-                    if (!IsValid(_pressedColumn))
+                    if (IsValid(_pressedColumn))
                     {
-                        _pressedColumn = -1;
-                    }
-                    else
-                    {
-                        int y = _game.DoTurn(_pressedColumn, _round % 2);
+                        int y = _game.DoTurn(_pressedColumn, _round%2);
                         int x = _pressedColumn;
 
                         if (GotWinner(x, y))
                         {
-                            Winner = _game.Player[_round % 2];
+                            Winner = _game.Player[_round%2];
                             Logger.Log("WE GOT A WINNER!");
                         }
+                    }
+                    else
+                    {
+                        _pressedColumn = -1;
                     }
                 }
 
@@ -131,12 +132,12 @@ namespace VierGewinnt.Logic.Controller
         /// <returns></returns>
         private bool GotWinner(int x, int y)
         {
-            Logger.Log("X:" + x, " --- Y:" + y);
+            Logger.Log("X:" + x + " --- Y:" + y);
 
             bool winner = false;
             int tmpCount = 0;
-            State player = Field.Get(y,x);
-
+            State player = Field.Get(x, y);
+            
             for (int i = 0; i < Field.Height; i++)
             {
                 if(Field.Get(i, x) == player) {

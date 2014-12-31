@@ -28,18 +28,19 @@ namespace VierGewinnt.Model
         /// <param name="height">Height of the Field</param>
         public Field(int width, int height)
         {
+            
             _field = new State[width,height];
 
-            for (var x = 0; x < _field.GetLength(0); x++ )
+            for (var x = 0; x < width; x++ )
             {
-                for (var y = 0; y < _field.GetLength(1); y++)
+                for (var y = 0; y < height; y++)
                 {
-                    _field[x,y] = State.Empty;
+                    _field[x,y] = State.Empty; // Empty init our array
                 }
             }
         }
 
-        public State Get(int y, int x)
+        public State Get(int x, int y)
         {
             return _field[x, y];
         }
@@ -57,15 +58,16 @@ namespace VierGewinnt.Model
             return false;
         }
 
-        public int Set(int row, State player)
+        public int Set(int column, State player)
         {
-            for (var y = _field.GetLength(1)-1; y > 0; y--)
+            for (var y = _field.GetLength(1)-1; y >= 0; y--)
             {
-                if (_field[row, y] != State.Empty) continue;
+                if (_field[column, y] != State.Empty) continue;
                 
-                _field[row, y] = player;
+                _field[column, y] = player;
                 return y;
             }
+
             return -1;
         }
     }
