@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -93,7 +94,7 @@ namespace VierGewinnt.Logic.Controller
                 while (_pressedColumn == -1)
                 {
                     Logger.Debug("GameController", "Getting next Players Round");
-                    _game.Player[_round % 2].GetNext(ref _needsInput, ref _pressedColumn);
+                    _game.Player[_round%2].GetNext(ref _needsInput, ref _pressedColumn);
 
                     Logger.Log("Trying: " + _pressedColumn);
 
@@ -135,21 +136,83 @@ namespace VierGewinnt.Logic.Controller
             var winner = false;
             var tmpCount = 0;
             var player = Field.Get(x, y);
-            
+
+            #region Vertical
+
             for (var i = 0; i < Field.Height; i++)
             {
-                if(Field.Get(i, x) == player) {
+                if (Field.Get(x, i) == player)
+                {
                     tmpCount++;
-                    if(tmpCount == 4) {
-                        winner = true;
-                        break;
+                    if (tmpCount == 4)
+                    {
+                        return true;
                     }
-                } else {
+                }
+                else
+                {
                     tmpCount = 0;
                 }
             }
 
-            return winner;
+            #endregion
+
+            #region Horizontal
+
+            tmpCount = 0;
+            for (var i = 0; i < Field.Width; i++)
+            {
+
+                if (Field.Get(i, y) == player)
+                {
+                    tmpCount++;
+                    if (tmpCount == 4)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    tmpCount = 0;
+                }
+
+            }
+
+            #endregion
+
+            #region Top Left -> Bottom Right
+            tmpCount = 0;
+            int tX, tY;
+            if (y - x > 0)
+            {
+                tX = 0;
+                tY = y - x;
+            }
+            else
+            {
+                tX = x - y;
+                tY = 0;
+            }
+
+            for (var i = 0; tX + i < Field.Width && tY + i < Field.Height; i++)
+            {
+
+                if (Field.Get(tX +i, tY + i) == player)
+                {
+                    tmpCount++;
+                    if (tmpCount == 4)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    tmpCount = 0;
+                }
+            }
+            #endregion
+
+            return false;
         }
 
         public void InitGame()

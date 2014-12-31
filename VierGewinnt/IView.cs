@@ -54,6 +54,14 @@ namespace VierGewinnt
             this.ViewHost = wm;
             this.IsOverlay = Overlay;
             this.ParentView = p;
+
+            this.Loaded += IView_Loaded;
+        }
+
+        void IView_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.Focusable = true;
+            this.Focus();
         }
         #endregion
 
@@ -61,5 +69,6 @@ namespace VierGewinnt
         /// Close this View properly
         /// </summary>
         public abstract bool Close();
+
     }
 }

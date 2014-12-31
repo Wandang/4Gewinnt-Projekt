@@ -88,7 +88,7 @@ namespace VierGewinnt.Views
                             SetBackground(_btns[x, y], Color.FromRgb(255, 0, 0));
                             break;
                         case State.Player2:
-                            SetBackground(_btns[x, y], Color.FromRgb(0, 0, 255));
+                            SetBackground(_btns[x, y], Colors.Yellow);
                             break;
                     }
                 }
@@ -162,6 +162,16 @@ namespace VierGewinnt.Views
             System.Diagnostics.Debug.WriteLine("Clicked Col: " + (int)((Button)sender).CommandParameter);
 
             _game.SetColumn((int)(((Button)sender).CommandParameter));
+        }
+
+        private void GameView_OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Escape) return;
+            
+            System.Diagnostics.Debug.WriteLine("GOGO!!");
+
+            e.Handled = true;
+            ViewHost.Overlay(new MenuView(this.ViewHost, true, this));
         }
     }
 }

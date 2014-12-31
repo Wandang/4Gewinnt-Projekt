@@ -6,7 +6,7 @@
       xmlns:this="clr-namespace:VierGewinnt"
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="735"
-	Title="GameView" >
+	Title="GameView" PreviewKeyDown="GameView_OnPreviewKeyDown">
 
     <Grid>
         <Grid.RowDefinitions>
