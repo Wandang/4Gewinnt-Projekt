@@ -68,7 +68,7 @@ namespace VierGewinnt.Utils.Logger
         /// <param name="Messaage">Message to Log</param>
         private static void LogToConsole(LogLevel Level, string Namespace, string Messaage)
         {
-            ConsoleColor cc = Console.ForegroundColor;
+            var cc = Console.ForegroundColor;
 
             switch (Level)
             {

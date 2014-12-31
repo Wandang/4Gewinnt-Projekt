@@ -75,14 +75,12 @@ namespace VierGewinnt.Logic.Controller
         {
             Logger.Debug("Trying: " + row);
 
-            if (_needsInput)
+            if (!_needsInput) return; // Break out if we don't wait for Input
+            
+            lock (RoundLock)
             {
-                
-                lock (RoundLock)
-                {
-                    _pressedColumn = row;
-                    Monitor.Pulse(RoundLock);
-                }
+                _pressedColumn = row;
+                Monitor.Pulse(RoundLock);
             }
         }
 
@@ -103,8 +101,8 @@ namespace VierGewinnt.Logic.Controller
 
                     if (IsValid(_pressedColumn))
                     {
-                        int y = _game.DoTurn(_pressedColumn, _round%2);
-                        int x = _pressedColumn;
+                        var y = _game.DoTurn(_pressedColumn, _round%2);
+                        var x = _pressedColumn;
 
                         if (GotWinner(x, y))
                         {
@@ -134,11 +132,11 @@ namespace VierGewinnt.Logic.Controller
         {
             Logger.Log("X:" + x + " --- Y:" + y);
 
-            bool winner = false;
-            int tmpCount = 0;
-            State player = Field.Get(x, y);
+            var winner = false;
+            var tmpCount = 0;
+            var player = Field.Get(x, y);
             
-            for (int i = 0; i < Field.Height; i++)
+            for (var i = 0; i < Field.Height; i++)
             {
                 if(Field.Get(i, x) == player) {
                     tmpCount++;

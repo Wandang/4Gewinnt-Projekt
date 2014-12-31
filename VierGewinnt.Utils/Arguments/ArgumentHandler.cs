@@ -61,11 +61,11 @@ namespace VierGewinnt.Utils.Arguments
         /// <param name="args">Comandline Arguments</param>
         public static void Init()
         {
-            string[] args = Environment.GetCommandLineArgs();
+            var args = Environment.GetCommandLineArgs();
 
             if (args.Length > 0)
             {
-                for (int i = 0; i < args.Length; i++)
+                for (var i = 0; i < args.Length; i++)
                 {
                     if (args[i].StartsWith("-"))
                     {
@@ -83,11 +83,11 @@ namespace VierGewinnt.Utils.Arguments
         /// </summary>
         public static void Run()
         {
-            foreach (KeyValuePair<string, List<ArgumentCallback>> pair in Arguments)
+            foreach (var pair in Arguments)
             {
                 Debug.WriteLine(pair.Value.Count);
 
-                foreach (ArgumentCallback del in pair.Value)
+                foreach (var del in pair.Value)
                 {
                     del(_args[pair.Key]);
                 }
