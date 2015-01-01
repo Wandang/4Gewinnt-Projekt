@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,11 +29,6 @@ namespace VierGewinnt.Views
         readonly Button[,] _btns = new Button[7, 6];
 
         /// <summary>
-        /// The Task that handles the GameLoop
-        /// </summary>
-        private Task _gameLoop;
-
-        /// <summary>
         /// The Game Controller that runs the Game
         /// </summary>
         private GameController _game;
@@ -47,36 +44,22 @@ namespace VierGewinnt.Views
             base(mw, false, p)
         {
             InitializeComponent();
-            _gameLoop = new Task(GameLoop);
-
             _game = new GameController(p1, p2) {IsRunning = true};
+            _game.OnNeedUiUpdate += Update;
+            _game.OnPlayerWon += _game_OnPlayerWon;
 
-            StartGame();
+            _game.Start();
         }
 
-        public void StartGame()
+        async void _game_OnPlayerWon(object sender, PlayerWonEventArgs args)
         {
-            _gameLoop.Start();
-        }
-
-        public async void GameLoop()
-        {
-            while (_game.IsRunning)
-            {
-                _game.DoNext();
-                Update();
-            }
-
-            if (_game.Winner != null)
-            {
-                await DisplayWinner();
-            }
+            await DisplayWinner(args.Winner, args.Round);
         }
 
         /// <summary>
         /// Uptdate our GameView
         /// </summary>
-        public void Update()
+        public void Update(object sender)
         {
             for (var x = 0; x < 7; x++)
             {
@@ -95,6 +78,11 @@ namespace VierGewinnt.Views
             }
         }
 
+        /// <summary>
+        /// Change background Color of the Given Buttons
+        /// </summary>
+        /// <param name="btn"></param>
+        /// <param name="clr"></param>
         public void SetBackground(Button btn, Color clr)
         {
             btn.Dispatcher.Invoke(() =>
@@ -103,8 +91,13 @@ namespace VierGewinnt.Views
             });
         }
 
-        public async Task DisplayWinner()
+        /// <summary>
+        /// Display the winner
+        /// </summary>
+        /// <returns></returns>
+        public async Task DisplayWinner(IPlayer player, int round)
         {
+            Debug.WriteLine("WINNER WINNER CHICKEN DINNER!");
             await Task.Delay(1000);
         }
 
@@ -126,11 +119,11 @@ namespace VierGewinnt.Views
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            _game.SetColumn((int)((Button)sender).CommandParameter);
-        }
-
+        /// <summary>
+        /// Create the Buttons we need for the Game 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FrameworkElement_OnLoaded(object sender, RoutedEventArgs e)
         {
             for (var x = 0; x < 7; x++)
@@ -157,13 +150,21 @@ namespace VierGewinnt.Views
             }
         }
 
+        /// <summary>
+        /// Handle Button clicks and give it to our game Controller
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Clicked Col: " + (int)((Button)sender).CommandParameter);
-
             _game.SetColumn((int)(((Button)sender).CommandParameter));
         }
 
+        /// <summary>
+        /// Handle Escape so we an open our Game Menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameView_OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Escape) return;

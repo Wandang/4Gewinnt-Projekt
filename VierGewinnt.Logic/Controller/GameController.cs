@@ -27,6 +27,8 @@ namespace VierGewinnt.Logic.Controller
         /// </summary>
         int _round = 0;
 
+        private Task _gameLoop;
+
         /// <summary>
         /// The Row that the "User" wants to Click
         /// </summary>
@@ -54,6 +56,16 @@ namespace VierGewinnt.Logic.Controller
         /// </summary>
         public IPlayer Winner { get; set; }
 
+        #region Events
+        public delegate void NeedUiUpdate(object sender);
+
+        public event NeedUiUpdate OnNeedUiUpdate;
+
+        public delegate void PlayerWon(object sender, PlayerWonEventArgs args);
+
+        public event PlayerWon OnPlayerWon;
+        #endregion
+
         /// <summary>
         /// New Game Controller
         /// </summary>
@@ -65,13 +77,57 @@ namespace VierGewinnt.Logic.Controller
             };
 
             _game.CreateField(6,7);
+
+            _gameLoop = new Task(GameLoop);
+        }
+        
+        /// <summary>
+        /// Start the GameLoop and so the Game
+        /// </summary>
+        public void Start()
+        {
+            _gameLoop.Start();
         }
 
+        /// <summary>
+        /// Gameloop representing a game Round
+        /// </summary>
+        public void GameLoop()
+        {
+            while (IsRunning)
+            {
+                DoNext();
+                var handler = OnNeedUiUpdate;
+                if (handler != null)
+                {
+                    handler(this);
+                }
+            }
+
+            if (Winner != null)
+            {
+                Debug.WriteLine("GO for the Event");
+                var handler = OnPlayerWon;
+                if (handler != null)
+                {
+                    handler(this, new PlayerWonEventArgs {Round =  _round, Winner = _game.Player[_round%2]});
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set if we need input or not
+        /// </summary>
+        /// <param name="need"></param>
         public void NeedInput(bool need)
         {
             _needsInput = need;
         }
 
+        /// <summary>
+        /// If the GameControler needs input we can set our input with this Method
+        /// </summary>
+        /// <param name="row"></param>
         public void SetColumn(int row)
         {
             Logger.Debug("Trying: " + row);
@@ -81,6 +137,7 @@ namespace VierGewinnt.Logic.Controller
             lock (RoundLock)
             {
                 _pressedColumn = row;
+                _needsInput = false;
                 Monitor.Pulse(RoundLock);
             }
         }
@@ -96,10 +153,6 @@ namespace VierGewinnt.Logic.Controller
                     Logger.Debug("GameController", "Getting next Players Round");
                     _game.Player[_round%2].GetNext(ref _needsInput, ref _pressedColumn);
 
-                    Logger.Log("Trying: " + _pressedColumn);
-
-                    _needsInput = false; //Reset input so we don't forget this
-
                     if (IsValid(_pressedColumn))
                     {
                         var y = _game.DoTurn(_pressedColumn, _round%2);
@@ -107,6 +160,7 @@ namespace VierGewinnt.Logic.Controller
 
                         if (GotWinner(x, y))
                         {
+                            IsRunning = false;
                             Winner = _game.Player[_round%2];
                             Logger.Log("WE GOT A WINNER!");
                         }
@@ -131,9 +185,6 @@ namespace VierGewinnt.Logic.Controller
         /// <returns></returns>
         private bool GotWinner(int x, int y)
         {
-            Logger.Log("X:" + x + " --- Y:" + y);
-
-            var winner = false;
             var tmpCount = 0;
             var player = Field.Get(x, y);
 
