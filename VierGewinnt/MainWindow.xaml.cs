@@ -39,7 +39,6 @@ namespace VierGewinnt
         public void Navigate(IView to)
         {
             this.MainFrame.Content = to;
-            
         }
 
         /// <summary>

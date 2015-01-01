@@ -177,7 +177,6 @@ namespace VierGewinnt.Logic.Controller
                 }
 
             }
-
             #endregion
 
             #region Top Left -> Bottom Right
@@ -212,6 +211,35 @@ namespace VierGewinnt.Logic.Controller
             }
             #endregion
 
+            #region Top Right -> Bottom Left
+            tmpCount = 0;
+            if (x + y < Field.Width)
+            {
+                tX = x + y;
+                tY = 0;
+            }
+            else
+            {
+                tX = Field.Width - 1;
+                tY = y - (Field.Width - 1 - x);
+            }
+
+            for (var i = 0; tY + i < Field.Height && tX - i > 0; i++)
+            {
+                if (Field.Get(tX - i, tY + i) == player)
+                {
+                    tmpCount++;
+                    if (tmpCount == 4)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    tmpCount = 0;
+                }
+            }
+            #endregion
             return false;
         }
 
