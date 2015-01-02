@@ -185,112 +185,130 @@ namespace VierGewinnt.Logic.Controller
         /// <returns></returns>
         private bool GotWinner(int x, int y)
         {
-            var tmpCount = 0;
-            var player = Field.Get(x, y);
-
-            #region Vertical
-
-            for (var i = 0; i < Field.Height; i++)
-            {
-                if (Field.Get(x, i) == player)
+            State player = Field.Get(x,y);
+            //test horizontal
+            int counter = 1;
+            for (int i = 1; i < 4; i++)
+			{
+                if (x - i < Field.Width && x - i >= 0)
                 {
-                    tmpCount++;
-                    if (tmpCount == 4)
+                    if (Field.Get(x - i, y) == player)
                     {
-                        return true;
+                        counter += 1;
+                        if (counter == 4)
+                        {
+                            return true;
+                        }
                     }
                 }
-                else
-                {
-                    tmpCount = 0;
-                }
             }
-
-            #endregion
-
-            #region Horizontal
-
-            tmpCount = 0;
-            for (var i = 0; i < Field.Width; i++)
+            for (int i = 1; i < 4; i++)
             {
-
-                if (Field.Get(i, y) == player)
+                if (x + i < Field.Width && x + i >= 0)
                 {
-                    tmpCount++;
-                    if (tmpCount == 4)
+                    if (Field.Get(x + i, y) == player)
                     {
-                        return true;
+                        counter += 1;
+                        if (counter == 4)
+                        {
+                            return true;
+                        }
                     }
                 }
-                else
+            }
+
+            //test vertical
+            counter = 1;
+            for (int i = 1; i < 4; i++)
+            {
+                if (y - i < Field.Height && y - i >= 0)
                 {
-                    tmpCount = 0;
-                }
-
-            }
-            #endregion
-
-            #region Top Left -> Bottom Right
-            tmpCount = 0;
-            int tX, tY;
-            if (y - x > 0)
-            {
-                tX = 0;
-                tY = y - x;
-            }
-            else
-            {
-                tX = x - y;
-                tY = 0;
-            }
-
-            for (var i = 0; tX + i < Field.Width && tY + i < Field.Height; i++)
-            {
-
-                if (Field.Get(tX +i, tY + i) == player)
-                {
-                    tmpCount++;
-                    if (tmpCount == 4)
+                    if (Field.Get(x, y-i) == player)
                     {
-                        return true;
+                        counter += 1;
+                        if (counter == 4)
+                        {
+                            return true;
+                        }
                     }
                 }
-                else
+            }
+            for (int i = 1; i < 4; i++)
+            {
+                if (y + i < Field.Height && y + i >= 0)
                 {
-                    tmpCount = 0;
-                }
-            }
-            #endregion
-
-            #region Top Right -> Bottom Left
-            tmpCount = 0;
-            if (x + y < Field.Width)
-            {
-                tX = x + y;
-                tY = 0;
-            }
-            else
-            {
-                tX = Field.Width - 1;
-                tY = y - (Field.Width - 1 - x);
-            }
-
-            for (var i = 0; tY + i < Field.Height && tX - i > 0; i++)
-            {
-                if (Field.Get(tX - i, tY + i) == player)
-                {
-                    tmpCount++;
-                    if (tmpCount == 4)
+                    if (Field.Get(x, y + i) == player)
                     {
-                        return true;
+                        counter += 1;
+                        if (counter == 4)
+                        {
+                            return true;
+                        }
                     }
                 }
-                else
+            }
+            //test diagonal links unten nach rechts oben
+            counter = 1;
+            for (int i = 1; i < 4; i++)
+            {
+                if (x - i < Field.Height && x - i >= 0 && y - i < Field.Height && y - i >= 0)
                 {
-                    tmpCount = 0;
+                    if (Field.Get(x - i, y - i) == player)
+                    {
+                        counter += 1;
+                        if (counter == 4)
+                        {
+                            return true;
+                        }
+                    }
                 }
             }
-            #endregion
+            for (int i = 1; i < 4; i++)
+            {
+                if (x + i < Field.Height && x + i >= 0 && y + i < Field.Height && y + i >= 0)
+                {
+                    if (Field.Get(x + i, y + i) == player)
+                    {
+                        counter += 1;
+                        if (counter == 4)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            //test diagonal links oben nach rechts unten
+            counter = 1;
+            for (int i = 1; i < 4; i++)
+            {
+                if (x - i < Field.Height && x - i >= 0 && y + i < Field.Height && y + i >= 0)
+                {
+                    if (Field.Get(x - i, y + i) == player)
+                    {
+                        counter += 1;
+                        if (counter == 4)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            for (int i = 1; i < 4; i++)
+            {
+                if (x + i < Field.Height && x + i >= 0 && y - i < Field.Height && y - i >= 0)
+                {
+                    if (Field.Get(x + i, y - i) == player)
+                    {
+                        counter += 1;
+                        if (counter == 4)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
             return false;
         }
 
