@@ -47,13 +47,17 @@ namespace VierGewinnt.Views
             _game = new GameController(p1, p2) {IsRunning = true};
             _game.OnNeedUiUpdate += Update;
             _game.OnPlayerWon += _game_OnPlayerWon;
-
+            _game.InitGame();
             _game.Start();
         }
 
-        async void _game_OnPlayerWon(object sender, PlayerWonEventArgs args)
+        void _game_OnPlayerWon(object sender, PlayerWonEventArgs args)
         {
-            await DisplayWinner(args.Winner, args.Round);
+            ViewHost.Dispatcher.Invoke(() =>
+            {
+                DisplayWinner(args.Winner, args.Round);
+            });
+
         }
 
         /// <summary>
@@ -73,6 +77,9 @@ namespace VierGewinnt.Views
                         case State.Player2:
                             SetBackground(_btns[x, y], Colors.Yellow);
                             break;
+                        default:
+                            SetBackground(_btns[x, y], Colors.White);
+                            break;
                     }
                 }
             }
@@ -85,20 +92,21 @@ namespace VierGewinnt.Views
         /// <param name="clr"></param>
         public void SetBackground(Button btn, Color clr)
         {
-            btn.Dispatcher.Invoke(() =>
-            {
-                btn.Background = new SolidColorBrush(clr);
-            });
+            if (btn != null) { 
+                btn.Dispatcher.Invoke(() =>
+                {
+                    btn.Background = new SolidColorBrush(clr);
+                });
+            }
         }
 
         /// <summary>
         /// Display the winner
         /// </summary>
         /// <returns></returns>
-        public async Task DisplayWinner(IPlayer player, int round)
+        public void DisplayWinner(IPlayer player, int round)
         {
-            Debug.WriteLine("WINNER WINNER CHICKEN DINNER!");
-            await Task.Delay(1000);
+            ViewHost.Overlay(new WinView(player, _game, ViewHost));
         }
 
         /// <summary>
@@ -139,15 +147,15 @@ namespace VierGewinnt.Views
 
 
                     _btns[x, y].Click += btn_Click;
-
-
-
+                    
                     Canv.Children.Add(_btns[x, y]);
 
                     Canvas.SetLeft(_btns[x, y], x * 50);
                     Canvas.SetTop(_btns[x, y], y * 50);
                 }
             }
+
+            Update(this);
         }
 
         /// <summary>
@@ -169,10 +177,8 @@ namespace VierGewinnt.Views
         {
             if (e.Key != Key.Escape) return;
             
-            System.Diagnostics.Debug.WriteLine("GOGO!!");
-
             e.Handled = true;
-            ViewHost.Overlay(new MenuView(this.ViewHost, true, this));
+            ViewHost.Overlay(new GameMenuView(ViewHost, true, null));
         }
     }
 }

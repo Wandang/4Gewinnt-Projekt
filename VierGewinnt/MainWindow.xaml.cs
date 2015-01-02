@@ -29,7 +29,7 @@ namespace VierGewinnt
 
             //Now the GUI
             InitializeComponent();
-            this.Navigate(new MenuView(this));
+            Navigate(new MenuView(this));
         }
 
         /// <summary>
@@ -38,7 +38,14 @@ namespace VierGewinnt
         /// <param name="to">The View we Should navigate to</param>
         public void Navigate(IView to)
         {
-            this.MainFrame.Content = to;
+            if (to.IsOverlay)
+            {
+                OverlayFrame.Content = to;
+            }
+            else
+            {
+                MainFrame.Content = to;
+            }
         }
 
         /// <summary>
@@ -47,8 +54,12 @@ namespace VierGewinnt
         /// <param name="ov">View to use in Overlay</param>
         public void Overlay(IView ov)
         {
-            this.BlendRect.Visibility = System.Windows.Visibility.Visible;
-            this.OverlayFrame.Content = ov;
+            Dispatcher.Invoke(() =>
+            {
+                BlendRect.Visibility = Visibility.Visible;
+                OverlayFrame.Content = ov;
+            });
+            
         }
 
         /// <summary>
@@ -64,11 +75,11 @@ namespace VierGewinnt
                 {
                     if (view.IsOverlay)
                     {
-                        this.OverlayFrame.Content = view.ParentView;
+                        OverlayFrame.Content = view.ParentView;
                     }
                     else
                     {
-                        this.MainFrame.Content = view.ParentView;
+                        MainFrame.Content = view.ParentView;
                     }
                 }
             }
@@ -78,13 +89,14 @@ namespace VierGewinnt
                 {
                     if (view.IsOverlay)
                     {
-                        this.OverlayFrame.Content = null;
-                        this.BlendRect.Visibility = System.Windows.Visibility.Hidden;
+                        OverlayFrame.Content = null;
+                        BlendRect.Visibility = Visibility.Hidden;
                         view.Close();
+                        ((IView) MainFrame.Content).Focus();
                     }
                     else
                     {
-                        this.Close();
+                        Close();
                     }
                 }
             }

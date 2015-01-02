@@ -14,9 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VierGewinnt.Logic", "VierGewinnt.Logic\VierGewinnt.Logic.csproj", "{D913A06E-F732-4350-A9F4-08287626580D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KIs", "KIs", "{7110A5ED-C1C2-4E1F-947E-E58DAA9AAB7D}"
-	ProjectSection(SolutionItems) = preProject
-		README.txt = README.txt
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VierGewinnt.Utils", "VierGewinnt.Utils\VierGewinnt.Utils.csproj", "{BF308898-F3B0-49D2-84FD-3296481A09C6}"
 EndProject

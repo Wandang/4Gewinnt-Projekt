@@ -18,7 +18,7 @@ namespace VierGewinnt.Views
     /// <summary>
     /// Interaktionslogik für MenuView.xaml
     /// </summary>
-    public partial class MenuView : IView
+    public partial class GameMenuView : IView
     {
         /// <summary>
         /// Create new Menu View
@@ -26,7 +26,7 @@ namespace VierGewinnt.Views
         /// <param name="mw">Window to attach to</param>
         /// <param name="overlay">Is this a Overlay or not</param>
         /// <param name="p">Parent View of this View</param>
-        public MenuView(MainWindow mw, bool overlay, IView p) :
+        public GameMenuView(MainWindow mw, bool overlay, IView p) :
             base(mw, overlay, p)
         {
             InitializeComponent();
@@ -36,7 +36,7 @@ namespace VierGewinnt.Views
         /// Create new Menu View
         /// </summary>
         /// <param name="mw">Window to attach to</param>
-        public MenuView(MainWindow mw) :
+        public GameMenuView(MainWindow mw) :
             this(mw, false, null) { }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace VierGewinnt.Views
         /// </summary>
         public override bool Close()
         {
-            return (ParentView == null);
+            return (ParentView == null || IsOverlay);
         }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace VierGewinnt.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        private void BtnMenu_Click(object sender, RoutedEventArgs e)
         {
-            ViewHost.CloseView(this);
+            
         }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace VierGewinnt.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnPlay_Click(object sender, RoutedEventArgs e)
+        private void BtnContinue_Click(object sender, RoutedEventArgs e)
         {
-            ViewHost.Navigate(new GameStyleView(ViewHost, false, this));
+            ViewHost.CloseView(this);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace VierGewinnt.Views
         /// <param name="e"></param>
         private void BtnOptions_Click(object sender, RoutedEventArgs e)
         {
-            ViewHost.Navigate(new OptionsView(ViewHost, false, this));
+            ViewHost.Navigate(new OptionsView(ViewHost, true, this));
         }
     }
 }

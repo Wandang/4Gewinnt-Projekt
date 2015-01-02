@@ -44,7 +44,7 @@ namespace VierGewinnt.Views
         /// <param name="e"></param>
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            this.ViewHost.CloseView(this);
+            ViewHost.CloseView(this);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace VierGewinnt.Views
         /// <param name="e"></param>
         private void BtnSingle_Click(object sender, RoutedEventArgs e)
         {
-            this.ViewHost.Navigate(new GameView(this.ViewHost, this.ParentView, new HumanPlayer("EldoranDev"), new HumanPlayer("EldoranDev2")));
+            ViewHost.Navigate(new GameView(ViewHost, ParentView, new HumanPlayer("EldoranDev"), new HumanPlayer("EldoranDev2")));
         }
     }
 }

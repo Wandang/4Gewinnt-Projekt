@@ -49,19 +49,19 @@ namespace VierGewinnt
         /// Create new View
         /// </summary>
         /// <param name="wm">Window that this View is Attached to</param>
-        /// <param name="Overlay">Is this Page a Overlay or not</param>
-        public IView(MainWindow wm, bool Overlay, IView p) {
-            this.ViewHost = wm;
-            this.IsOverlay = Overlay;
-            this.ParentView = p;
+        /// <param name="overlay">Is this Page a Overlay or not</param>
+        public IView(MainWindow wm, bool overlay, IView p) {
+            ViewHost = wm;
+            IsOverlay = overlay;
+            ParentView = p;
 
-            this.Loaded += IView_Loaded;
+            Loaded += IView_Loaded;
         }
 
         void IView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            this.Focusable = true;
-            this.Focus();
+            Focusable = true;
+            Focus();
         }
         #endregion
 

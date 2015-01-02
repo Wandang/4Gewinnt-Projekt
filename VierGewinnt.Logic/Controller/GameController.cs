@@ -25,7 +25,7 @@ namespace VierGewinnt.Logic.Controller
         /// <summary>
         /// Current Round
         /// </summary>
-        int _round = 0;
+        int _round;
 
         private Task _gameLoop;
 
@@ -77,8 +77,6 @@ namespace VierGewinnt.Logic.Controller
             };
 
             _game.CreateField(6,7);
-
-            _gameLoop = new Task(GameLoop);
         }
         
         /// <summary>
@@ -97,16 +95,11 @@ namespace VierGewinnt.Logic.Controller
             while (IsRunning)
             {
                 DoNext();
-                var handler = OnNeedUiUpdate;
-                if (handler != null)
-                {
-                    handler(this);
-                }
+                Update();
             }
 
             if (Winner != null)
             {
-                Debug.WriteLine("GO for the Event");
                 var handler = OnPlayerWon;
                 if (handler != null)
                 {
@@ -314,12 +307,27 @@ namespace VierGewinnt.Logic.Controller
 
         public void InitGame()
         {
+            Winner = null;
+            _gameLoop = new Task(GameLoop);
+            IsRunning = true;
             _game.CreateField(6, 7);
+            _round = 0;
+
+           Update();
         }
 
         private bool IsValid(int col)
         {
             return Field.HasEmpty(col);
+        }
+
+        private void Update()
+        {
+            var handler = OnNeedUiUpdate;
+            if (handler != null)
+            {
+                handler(this);
+            }
         }
     }
 }
