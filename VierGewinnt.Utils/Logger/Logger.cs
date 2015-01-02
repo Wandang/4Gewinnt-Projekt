@@ -21,10 +21,10 @@ namespace VierGewinnt.Utils.Logger
                 switch (args)
                 {
                     case "debug":
-                        Logger.Level = LogLevel.DEBUG;
+                        Level = LogLevel.DEBUG;
                         break;
                     default:
-                        Logger.Level = LogLevel.NORMAL;
+                        Level = LogLevel.NORMAL;
                         break;
                 }
 
@@ -109,7 +109,7 @@ namespace VierGewinnt.Utils.Logger
         #region Chat
         public static void Chat(string Message)
         {
-            if ((int)Logger.Level > 1)
+            if ((int)Level > 1)
             {
                 Log(LogLevel.CHAT, "", Message);
             }
@@ -124,7 +124,7 @@ namespace VierGewinnt.Utils.Logger
         /// <param name="Message">Message to Log</param>
         public static void Log(string Namespace, string Message)
         {
-            if ((int)Logger.Level >= 2)
+            if ((int)Level >= 2)
             {
                 Log(LogLevel.NORMAL, Namespace, Message);
             }
@@ -143,7 +143,7 @@ namespace VierGewinnt.Utils.Logger
         #region Info
         public static void Info(string Namespace, string Message)
         {
-            if ((int)Logger.Level >= 3)
+            if ((int)Level >= 3)
             {
 
             }
@@ -153,7 +153,7 @@ namespace VierGewinnt.Utils.Logger
         #region Debug
         public static void Debug(string Namespace, string Message)
         {
-            if ((int)Logger.Level >= 4)
+            if ((int)Level >= 4)
             {
                 Log(LogLevel.DEBUG, Namespace, Message);
             }

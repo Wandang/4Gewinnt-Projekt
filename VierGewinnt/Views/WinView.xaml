@@ -1,4 +1,4 @@
-﻿<this:IView x:Class="VierGewinnt.Views.MenuView"
+﻿<this:IView x:Class="VierGewinnt.Views.WinView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -23,7 +23,7 @@
         </Grid.ColumnDefinitions>
 
         <Viewbox Grid.Row="1" Grid.Column="1" Margin="15">
-            <TextBlock  Text="Vier Gewinnt" FontFamily="Segoe UI Light" />
+            <TextBlock Name="WinnerTb">Player - Won</TextBlock>    
         </Viewbox>
 
         <Grid Grid.Row="2" Grid.Column="1">
@@ -35,9 +35,9 @@
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
             
-            <Button Grid.Row="1" Margin="0,5" Content="Spielen" Click="BtnPlay_Click"/>
-            <Button Grid.Row="2" Margin="0,5" Content="Optionen" Click="BtnOptions_Click" IsEnabled="False"/>
-            <Button Grid.Row="3" Margin="0,5" Content="Beenden" Click="BtnClose_Click"/>
+            <Button Grid.Row="1" Margin="0,5" Content="Neues Spiel" Click="BtnContinue_Click"/>
+
+            <Button Grid.Row="3" Margin="0,5" Content="Hauptmenü" Click="BtnMenu_Click"/>
         </Grid>
 
     </Grid>
